@@ -19,23 +19,11 @@ const tag = Astro.props;
 
 const authors = await getCollection("authors");
 
-const articles = (
-  await getCollection("articles", (article) => {
-    if (article.data.tags) {
-      console.log(article.data.tags);
-    }
-    return article.data.tags?.find((t) => t.id === tag.id);
-  })
-).map((article) => {
-  const author = authors.find((a) => a.id === article.data.author?.id);
-
-  return {
-    ...article,
-    data: {
-        ...article.data,
-        author,
-      },
-  };
+const articles = await getCollection("articles", (article) => {
+  if (article.data.tags) {
+    console.log(article.data.tags);
+  }
+  return article.data.tags?.find((t) => t.id === tag.id);
 });
 ---
 
@@ -44,6 +32,6 @@ const articles = (
   <p class="text-xl">{tag.data.description}</p>
 
   <div class="mt-8">
-    <ArticleList articles={articles} />
+    <ArticleList articles={articles} authors={authors} />
   </div>
 </Layout>

@@ -3,42 +3,40 @@ import type { CollectionEntry } from "astro:content";
 import FormattedDate from "./FormattedDate.astro";
 
 type Props = {
-  articles: CollectionEntry<"articles"> & {
-    slug: string;
-    data: CollectionEntry<"articles">["data"] & {
-      author?: CollectionEntry<"authors">;
-    };
-  }[];
+  articles: CollectionEntry<"articles">[];
+  authors: CollectionEntry<"authors">[];
 };
 
-const { articles } = Astro.props;
+const { articles, authors } = Astro.props;
 ---
 
 <ul class="flex flex-col gap-6">
   {
-    articles.map((article) => (
-      <li class="border border-l-4 border-l-gray-200 hover:border-l-primary rounded-r">
-        <a class="flex flex-col p-4" href={`/articles/${article.slug}/`}>
-          {/*<img width={720} height={360} src={article.data.heroImage} alt="" />*/}
-          <div class="flex flex-row justify-between place-items-center">
-            <h4 class="font-bold">{article.data.title}</h4>
-            <p class="font-thin text-sm">
-              <FormattedDate date={article.data.pubDate} />
-            </p>
-          </div>
-          {article.data.author && (
-            <div class="flex flex-row gap-4 place-items-center">
+    articles.map((article) => {
+      const author = authors.find(
+        (author) => author.id === article.data.author?.id
+      );
+      return (
+        <li class="border border-l-4 border-l-gray-200 hover:border-l-primary rounded-r">
+          <a class="flex flex-col p-4" href={`/articles/${article.slug}/`}>
+            {/*<img width={720} height={360} src={article.data.heroImage} alt="" />*/}
+            <div class="flex flex-row justify-between place-items-center">
+              <h4 class="font-bold">{article.data.title}</h4>
               <p class="font-thin text-sm">
-                By{" "}
-                <strong class="font-medium">
-                  {article.data.author.data.name}
-                </strong>
+                <FormattedDate date={article.data.pubDate} />
               </p>
             </div>
-          )}
-          <p class="font-thin text-base mt-4">{article.data.description}</p>
-        </a>
-      </li>
-    ))
+            {author && (
+              <div class="flex flex-row gap-4 place-items-center">
+                <p class="font-thin text-sm">
+                  By <strong class="font-medium">{author.data.name}</strong>
+                </p>
+              </div>
+            )}
+            <p class="font-thin text-base mt-4">{article.data.description}</p>
+          </a>
+        </li>
+      );
+    })
   }
 </ul>

@@ -1,22 +1,12 @@
 ---
 import Layout from "../../layouts/Base.astro";
-import Main from "../../components/Main.astro";
 import { getCollection } from "astro:content";
 import GlossaryList from "../../components/GlossaryList.astro";
 
 const authors = await getCollection("authors");
-const glossaryEntries = (await getCollection("glossary"))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .map((post) => {
-    const author = authors.find((author) => author.id === post.data.author?.id);
-    return {
-      ...post,
-      data: {
-        ...post.data,
-        author,
-      },
-    };
-  });
+const glossaryEntries = (await getCollection("glossary")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 ---
 
 <Layout>
@@ -28,7 +18,7 @@ const glossaryEntries = (await getCollection("glossary"))
       beginners.
     </p>
     <div class="mt-8">
-      <GlossaryList glossaryEntries={glossaryEntries} />
+      <GlossaryList glossaryEntries={glossaryEntries} authors={authors} />
     </div>
   </section>
 </Layout>
