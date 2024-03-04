@@ -1,0 +1,15 @@
+---
+import { getEntry } from "astro:content";
+
+const { id, text } = Astro.props;
+
+const entry = await getEntry("glossary", id);
+---
+
+<a class="tooltip" href={`/glossary/${id}`}>
+  {text}
+  <span class="tooltiptext">
+    <span class="tooltip-title">{entry.data.title} - glossary definition</span>
+    <span class="tooltip-body">{entry.data.definition}</span>
+  </span>
+</a>

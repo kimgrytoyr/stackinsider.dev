@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Base.astro";
+import Main from "../../components/Main.astro";
+import ArticleList from "../../components/ArticleList.astro";
+import { getCollection } from "astro:content";
+
+const authors = await getCollection("authors");
+const posts = (await getCollection("articles"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((post) => {
+    const author = authors.find((author) => author.id === post.data.author?.id);
+    return {
+      ...post,
+      data: {
+        ...post.data,
+        author,
+      },
+    };
+  });
+---
+
+<Layout>
+  <section>
+    <h2 class="heading-2">Articles</h2>
+    <ArticleList articles={posts} />
+  </section>
+</Layout>

@@ -1,0 +1,9 @@
+---
+const { prose } = Astro.props;
+---
+
+<main class="max-w-3xl px-4 mx-auto pb-16">
+  <div class:list={[prose && "prose prose-xl"]}>
+    <slot />
+  </div>
+</main>

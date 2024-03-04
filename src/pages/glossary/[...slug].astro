@@ -1,0 +1,30 @@
+---
+import BlogPost from "../../layouts/BlogPost.astro";
+import Layout from "../../layouts/Base.astro";
+import { type CollectionEntry, getCollection, getEntries } from "astro:content";
+
+export async function getStaticPaths() {
+  const glossaryEntries = await getCollection("glossary");
+
+  return glossaryEntries.map((glossary) => {
+    return {
+      params: { slug: glossary.slug },
+      props: glossary,
+    };
+  });
+}
+type Props = CollectionEntry<"glossary">;
+
+const glossary = Astro.props;
+const { Content } = await glossary.render();
+const tags = glossary.data.tags ? await getEntries(glossary.data.tags) : [];
+---
+
+<BlogPost
+  {...glossary.data}
+  tags={tags}
+  backToLink="glossary"
+  backToTitle="Glossary"
+>
+  <Content />
+</BlogPost>

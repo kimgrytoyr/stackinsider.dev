@@ -1,0 +1,109 @@
+/*
+  The CSS in this style tag is based off of Bear Blog's default CSS.
+  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
+  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+ */
+
+:root {
+	--color-primary: 197 74% 31%;
+	--accent: 235 100% 57%;
+	--accent-dark: #000d8a;
+	--black: 15, 18, 25;
+	--gray: 96, 115, 159;
+	--gray-light: 229, 233, 240;
+	--gray-dark: 34, 41, 57;
+	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
+		0 16px 32px rgba(var(--gray), 33%);
+}
+
+@font-face {
+	font-family: 'PT Sans', sans-serif;
+	src: url('/fonts/PTSans-Regular.ttf') format('ttf');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'PT Sans', sans-serif;
+	src: url('/fonts/PTSans-Bold.ttf') format('ttf');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+body {
+	font-family: 'PT Sans', sans-serif, sans-serif;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background: linear-gradient(var(--gray-gradient)) no-repeat;
+	background-size: 100% 600px;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	color: rgb(var(--gray-dark));
+	font-size: 20px;
+	line-height: 1.7;
+}
+
+.footnotes {
+	@apply border-t;
+	font-size: 0.8em;
+}
+
+ol {
+	list-style: decimal;
+	counter-reset: item;
+	padding: 0;
+}
+
+.heading-1 {
+	@apply text-4xl sm:text-5xl font-bold mb-6;
+}
+
+.heading-2 {
+	@apply text-2xl sm:text-4xl font-bold mb-4;
+}
+
+.tooltip {
+	--width: min(30rem, calc(100vw - 4rem));
+	position: relative;
+	display: inline-block;
+	text-decoration: underline;
+	text-decoration-color: hsl(var(--color-primary) / 0.5);
+	text-decoration-style: dotted;
+	text-decoration-thickness: 2px;
+	text-underline-offset: .4rem;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: var(--width);
+
+	@apply border rounded-lg p-4 bg-white shadow-lg;
+
+	/* Position the tooltip text - see examples below! */
+	position: absolute;
+	z-index: 1;
+	top: 100%;
+	left: 0%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+.tooltip:hover .tooltiptext > *{
+	display: inline-block;
+}
+
+.tooltip .tooltiptext .tooltip-title {
+	@apply text-lg font-bold mb-2;
+}
+
+.tooltip .tooltiptext .tooltip-body {
+	@apply text-base italic;
+}

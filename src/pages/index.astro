@@ -1,0 +1,88 @@
+---
+import Layout from "../layouts/Base.astro";
+import Main from "../components/Main.astro";
+
+const frameworks = [
+  ["react", "React"],
+  ["nextjs", "Next.js"],
+  ["vue", "Vue"],
+  ["svelte", "Svelte"],
+  ["astro", "Astro"],
+];
+
+const tools = [
+  ["vscode", "VS Code"],
+  ["git", "Git"],
+  ["github", "GitHub"],
+  ["netlify", "Netlify"],
+  ["vercel", "Vercel"],
+];
+
+const languages = [
+  ["javascript", "JavaScript"],
+  ["typescript", "TypeScript"],
+  ["html", "HTML"],
+  ["css", "CSS"],
+];
+
+const bestPractices = [
+  ["accessibility", "Accessibility"],
+  ["performance", "Performance"],
+  ["seo", "SEO"],
+];
+---
+
+<Layout prose>
+  <dl>
+    <dt>Web development frameworks</dt>
+    <dd>
+      {
+        frameworks.map(([tag, name], i) => (
+          <>
+            <a href={`/tags/${tag}`}>{name}</a>{" "}
+            {i < frameworks.length - 1 && " • "}
+          </>
+        ))
+      } – the list goes on and on...
+    </dd>
+    <dt>Web development tools</dt>
+    <dd>
+      {
+        tools.map(([tag, name], i) => (
+          <>
+            <a href={`/tags/${tag}`}>{name}</a>
+            {i < tools.length - 1 && " • "}
+          </>
+        ))
+      } – and more...
+    </dd>
+    <dt>Web development languages</dt>
+    <dd>
+      {
+        languages.map(([tag, name], i) => (
+          <>
+            <a href={`/tags/${tag}`}>{name}</a>
+            {i < languages.length - 1 && " • "}
+          </>
+        ))
+      } – and so on...
+    </dd>
+    <dt>Web development best practices</dt>
+    <dd>
+      {
+        bestPractices.map(([tag, name], i) => (
+          <>
+            <a href={`/tags/${tag}`}>{name}</a>
+            {i < bestPractices.length - 1 && " • "}
+          </>
+        ))
+      } – and more...
+    </dd>
+  </dl>
+
+  <p>
+    I hope you find the content here useful and informative. If you have any
+    questions or suggestions, feel free to reach out to me on{" "}
+    <a href="https://twitter.com/kdev">Twitter</a>.
+  </p>
+</Layout>

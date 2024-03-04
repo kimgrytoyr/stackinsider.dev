@@ -1,0 +1,49 @@
+---
+import ArticleList from "../../components/ArticleList.astro";
+import Layout from "../../layouts/Base.astro";
+import { type CollectionEntry, getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const tags = await getCollection("tags");
+
+  return tags.map((tag) => {
+    return {
+      params: { tag: tag.id },
+      props: tag,
+    };
+  });
+}
+type Props = CollectionEntry<"tags">;
+
+const tag = Astro.props;
+
+const authors = await getCollection("authors");
+
+const articles = (
+  await getCollection("articles", (article) => {
+    if (article.data.tags) {
+      console.log(article.data.tags);
+    }
+    return article.data.tags?.find((t) => t.id === tag.id);
+  })
+).map((article) => {
+  const author = authors.find((a) => a.id === article.data.author?.id);
+
+  return {
+    ...article,
+    data: {
+        ...article.data,
+        author,
+      },
+  };
+});
+---
+
+<Layout title="Tags" description="All tags">
+  <h1 class="heading-1">{tag.data.name}</h1>
+  <p class="text-xl">{tag.data.description}</p>
+
+  <div class="mt-8">
+    <ArticleList articles={articles} />
+  </div>
+</Layout>

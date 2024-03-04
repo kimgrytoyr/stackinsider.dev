@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from "astro:content";
+import FormattedDate from "./FormattedDate.astro";
+
+type Props = {
+  glossaryEntries: CollectionEntry<"glossary"> & {
+    slug: string;
+    data: CollectionEntry<"glossary">["data"] & {
+      author?: CollectionEntry<"authors">;
+    };
+  }[];
+};
+
+const { glossaryEntries } = Astro.props;
+---
+
+<ul class="flex flex-col gap-6">
+  {
+    glossaryEntries.map((keyword) => (
+      <li class="border border-l-4 border-l-gray-200 hover:border-l-primary rounded-r">
+        <a class="flex flex-col p-4" href={`/glossary/${keyword.slug}/`}>
+          {/*<img width={720} height={360} src={keyword.data.heroImage} alt="" />*/}
+          <div class="flex flex-row justify-between place-items-center">
+            <h4 class="font-bold">{keyword.data.title}</h4>
+            <p class="font-thin text-sm">
+              <FormattedDate date={keyword.data.pubDate} />
+            </p>
+          </div>
+          {keyword.data.author && (
+            <div class="flex flex-row gap-4 place-items-center">
+              <p class="font-thin text-sm">
+                By{" "}
+                <strong class="font-medium">
+                  {keyword.data.author.data.name}
+                </strong>
+              </p>
+            </div>
+          )}
+          <p class="font-thin text-base mt-4">{keyword.data.description}</p>
+        </a>
+      </li>
+    ))
+  }
+</ul>
