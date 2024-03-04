@@ -6,7 +6,7 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kim.grytoyrio',
+  site: 'https://stackinsider.dev',
   integrations: [mdx(), sitemap(), tailwind()],
   server: {
     host: '0.0.0.0'
